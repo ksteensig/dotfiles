@@ -11,11 +11,13 @@
 (global-set-key (kbd "C-x <left>") 'windmove-left)
 (global-set-key (kbd "C-x <right>") 'windmove-right)
 
-(ido-mode 1)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
 (setq ido-separator "\n")
+(ido-mode 1)
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/")))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
 (custom-set-variables
  '(package-selected-packages (quote (company-irony irony company-c-headers))))
