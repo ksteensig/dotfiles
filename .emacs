@@ -16,6 +16,8 @@
 (setq ido-separator "\n")
 (ido-mode 1)
 
+(scroll-bar-mode -1)
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
@@ -24,3 +26,10 @@
 (custom-set-faces)
 
 (add-hook 'after-init-hook 'global-company-mode)
+
+(setq inhibit-splash-screen t)
+
+(add-hook 'org-mode-hook 'turn-on-font-lock)
+(transient-mark-mode 1)
+
+(require 'org)
