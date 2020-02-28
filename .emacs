@@ -19,11 +19,26 @@
 (scroll-bar-mode -1)
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(setq package-archives '(("melpa" . "http://melpa.org/packages/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")))
 
 (custom-set-variables
- '(package-selected-packages (quote (company-irony irony company-c-headers))))
-(custom-set-faces)
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (use-package rust-mode company-irony irony company-c-headers))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(package-initialize)
+(global-company-mode)
 
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -33,3 +48,4 @@
 (transient-mark-mode 1)
 
 (require 'org)
+(require 'rust-mode)
