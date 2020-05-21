@@ -37,6 +37,9 @@
     material-theme                  ;; Theme
     elpy
     clang-format
+    use-package
+    tuareg
+    auctex
     )
   )
 
@@ -66,13 +69,35 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(package-selected-packages
    (quote
-    (clang-format use-package material-theme better-defaults elpy))))
+    (latex-preview-pane auctex virtualenv clang-format use-package material-theme better-defaults elpy tuareg))))
 
 (use-package elpy
   :ensure t
   :init
   (elpy-enable))
 
+(setq elpy-rpc-python-command "python3")
+
 (require 'clang-format)
+
+(add-hook 'before-save-hook
+  (lambda ()
+    (when (member major-mode '(c-mode c++-mode glsl-mode))
+      (progn
+        (when (locate-dominating-file "." ".clang-format")
+          (clang-format-buffer))
+        ;; Return nil, to continue saving.
+        nil))))
+
+(require 'tuareg)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
