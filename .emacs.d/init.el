@@ -19,7 +19,7 @@
  '(custom-safe-themes
    '("3b8284e207ff93dfc5e5ada8b7b00a3305351a3fb222782d8033a400a48eca48" default))
  '(package-selected-packages
-   '(which-key marginalia vertico org-bullets zenburn-theme magit use-package org-roam htmlize)))
+   '(vterm which-key marginalia vertico org-bullets zenburn-theme magit use-package org-roam htmlize)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
