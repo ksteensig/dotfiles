@@ -30,7 +30,7 @@
 ;; org-mode
 
 (setq org-directory
-      "~/Workspace/notes/org")
+      "~/Workspace/notes/roam")
 
 (use-package org-roam
   :ensure t
@@ -39,12 +39,28 @@
   :custom
   (org-roam-directory org-directory)
   (org-roam-completion-everywhere t)
+  (org-roam-capture-templates
+   '(("d" "default" entry "* %?"
+      :if-new (file+head  "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+     ("l" "literature" plain (file "~/Workspace/notes/templates/LiteratureNoteTemplate.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+     ("e" "experiment" plain (file "~/Workspace/notes/templates/ExperimentNoteTemplate.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+      :unnarrowed t)
+     ("v" "veo task" plain (file "~/Workspace/notes/templates/VeoTaskTemplate.org")
+      :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+filetags: :veo:\n")
+      :unnarrowed t)))
   (org-roam-dailies-capture-templates
-    '(("d" "default" entry "* %<%I:%M %p>: %?"
-       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+   '(("d" "default" entry "* %<%I:%M %p>: %?"
+      :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))
+     ("t" "todo" entry "* TODO %<%I:%M %p>: %?"
+      :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
   :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
+	 ("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
+	 ("C-c n t" . org-roam-tag-add)
          :map org-mode-map
          ("C-M-i" . completion-at-point)
          :map org-roam-dailies-map
@@ -56,6 +72,8 @@
   (require 'org-roam-dailies) ;; Ensure the keymap is available
   (org-roam-db-autosync-mode))
 
+(setq org-agenda-files '("~/Workspace/notes/roam/daily/"))
+
 (setq org-roam-v2-ack t)
 
 (setq org-hide-emphasis-markers t)
@@ -63,6 +81,8 @@
 (use-package org-bullets
     :config
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+
 
 ;; magit
 
