@@ -15,11 +15,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(deeper-blue))
+ '(custom-enabled-themes '(zenburn))
  '(custom-safe-themes
    '("3b8284e207ff93dfc5e5ada8b7b00a3305351a3fb222782d8033a400a48eca48" default))
  '(package-selected-packages
-   '(dashboard keepass-mode dockerfile-mode vterm which-key marginalia vertico org-bullets magit use-package htmlize)))
+   '(which-key marginalia vertico org-bullets zenburn-theme magit use-package org-roam htmlize)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -29,9 +29,35 @@
 
 ;; org-mode
 
-(setq org-directory "~/Workspace/notes/")
+(setq org-directory
+      "~/Workspace/notes/org")
 
-(setq org-agenda-files '("~/Workspace/notes/agenda/"))
+(use-package org-roam
+  :ensure t
+  :init
+  (setq org-roam-v2-ack t)
+  :custom
+  (org-roam-directory org-directory)
+  (org-roam-completion-everywhere t)
+  (org-roam-dailies-capture-templates
+    '(("d" "default" entry "* %<%I:%M %p>: %?"
+       :if-new (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+	 ("C-c n t" . org-roam-tag-add)
+         :map org-mode-map
+         ("C-M-i" . completion-at-point)
+         :map org-roam-dailies-map
+         ("Y" . org-roam-dailies-capture-yesterday)
+         ("T" . org-roam-dailies-capture-tomorrow))
+  :bind-keymap
+  ("C-c n d" . org-roam-dailies-map)
+  :config
+  (require 'org-roam-dailies) ;; Ensure the keymap is available
+  (org-roam-db-autosync-mode))
+
+(setq org-roam-v2-ack t)
 
 (setq org-hide-emphasis-markers t)
 
@@ -79,16 +105,3 @@
 
 (use-package which-key)
 (which-key-mode)
-
-(use-package keepass-mode)
-
-(set-register ?e '(file . "~/.emacs.d/init.el"))
-(set-register ?i '(file . "~/Workspace/notes/ideas.org"))
-
-(require 'dashboard)
-(dashboard-setup-startup-hook)
-;; Or if you use use-package
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook))
